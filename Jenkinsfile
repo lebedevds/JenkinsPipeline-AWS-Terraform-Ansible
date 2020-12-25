@@ -6,7 +6,7 @@ pipeline {
       steps {
         sh 'terraform init'
         sh 'terraform plan'
-        sh 'echo 'yes' | terraform apply'
+        sh "echo 'yes' | terraform apply"
         }
     }
   }
