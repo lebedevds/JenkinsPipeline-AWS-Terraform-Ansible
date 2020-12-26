@@ -51,8 +51,8 @@
       bucket: mybacket1.test5.com
       file_root: /tmp/WAR/target/
       include: "*.war"
-      aws_access_key: {{ AWS_ACCEESS_KEY }}
-      aws_secret_key: {{ AWS_SECRET_KEY }}
+      aws_access_key: "{{ AWS_ACCEESS_KEY }}"
+      aws_secret_key: "{{ AWS_SECRET_KEY }}"
 
 
 
