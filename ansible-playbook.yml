@@ -74,7 +74,6 @@
       file:
         path: /home/ubuntu/war
         state: directory
-        mode: '0777'
 
     - name: Ensure war file on App Server
       get_url:
@@ -87,6 +86,6 @@
         docker rm webapp
       ignore_errors: yes
 
-#    - name: Ensure docker container is started
-#      command: docker run --name webapp -d -p 8080:8080 -v /tmp/war/:/usr/local/tomcat/webapps/ --restart=always tomcat:9.0.20-jre8-alpine
+    - name: Ensure docker container is started
+      command: docker run --name webapp -d -p 8080:8080 -v /home/ubuntu/war/:/usr/local/tomcat/webapps/ --restart=always tomcat:9.0.20-jre8-alpine
 
