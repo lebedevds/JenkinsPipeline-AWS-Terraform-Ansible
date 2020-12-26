@@ -14,7 +14,7 @@ pipeline {
           become: true,
           becomeUser: 'ubuntu',
           installation: 'ansible',
-          disableHostKeyChecking: false,
+          disableHostKeyChecking: true,
           credentialsId: 'AWS-key',
           vaultCredentialsId: 'AWS_ACCESS_KEY',
           playbook: './ansible-playbook.yml',
