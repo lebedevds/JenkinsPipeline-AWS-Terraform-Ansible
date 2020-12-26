@@ -72,15 +72,15 @@
 
     - name: Ensure derictory for war file is ready
       file:
-        path: $(pwd)/war
+        path: tmp/war
         state: directory
         mode: '0700'
 
     - name: Ensure war file on App Server
       get_url:
         url: https://s3.us-east-2.amazonaws.com/mybacket1.test5.com/hello-1.0.war
-        dest: $(pwd)/war/
+        dest: tmp/war/
 
     - name: Ensure docker container is started
-      command: docker run --name webapp -d -p 8080:8080 -v $(pwd)/war:/usr/local/tomcat/webapps/ tomcat:9.0.20-jre8-alpine
+      command: docker run --name webapp -d -p 8080:8080 -v tmp/war:/usr/local/tomcat/webapps/ tomcat:9.0.20-jre8-alpine
 
