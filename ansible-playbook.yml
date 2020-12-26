@@ -70,6 +70,12 @@
         name: docker.io
         state: present
 
+    - name: Ensure derictory for war file is ready
+      file:
+        path: $(pwd)/war
+        state: directory
+        mode: '0700'
+
     - name: Ensure war file on App Server
       get_url:
         url: https://s3.us-east-2.amazonaws.com/mybacket1.test5.com/hello-1.0.war
