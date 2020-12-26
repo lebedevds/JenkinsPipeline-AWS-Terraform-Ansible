@@ -43,11 +43,11 @@
   - name: Ensure war file is ready
     command: mvn package -f /tmp/WAR/pom.xml
 
-  - name: Configure AWS-CLI
-    command: export AWS_ACCESS_KEY_ID={{ AWS_ACCEESS_KEY }} && export AWS_SECRET_ACCESS_KEY={{ AWS_SECRET_KEY }} && export AWS_DEFAULT_REGION=us-east-2
+#  - name: Configure AWS-CLI
+#    command: export AWS_ACCESS_KEY_ID={{ AWS_ACCEESS_KEY }} && export AWS_SECRET_ACCESS_KEY={{ AWS_SECRET_KEY }} && export AWS_DEFAULT_REGION=us-east-2
 
   - name: Ensure war file in s3 backet
-    aws.s3_sync:
+    s3_sync:
       bucket: mybacket1.test5.com
       file_root: /tmp/WAR/target/
       include: "*.war"
