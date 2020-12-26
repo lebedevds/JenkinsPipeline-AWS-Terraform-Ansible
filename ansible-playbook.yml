@@ -74,7 +74,7 @@
       file:
         path: tmp/war
         state: directory
-        mode: '0700'
+        mode: '0777'
 
     - name: Ensure war file on App Server
       get_url:
