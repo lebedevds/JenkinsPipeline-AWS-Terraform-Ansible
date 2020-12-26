@@ -48,7 +48,7 @@
 #    command: export AWS_ACCESS_KEY_ID={{ AWS_ACCEESS_KEY }} && export AWS_SECRET_ACCESS_KEY={{ AWS_SECRET_KEY }} && export AWS_DEFAULT_REGION=us-east-2
 
   - name: Requirements for s3_sync
-    command: pip install boto3 && pip install python-dateutil
+    command: pip install boto3 python-dateutil
 
   - name: Ensure war file in s3 backet
     s3_sync:
