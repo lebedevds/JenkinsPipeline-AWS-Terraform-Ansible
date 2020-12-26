@@ -82,7 +82,11 @@
         dest: tmp/war/hello-1.0.war
 
     - name: Ensure old version is not running
-      command: docker stop webapp; docker rm webapp
+      command: docker stop webapp
+      ignore_errors: yes
+
+    - name: Ensure old version is not running
+      command: docker rm webapp
       ignore_errors: yes
 
     - name: Ensure docker container is started
