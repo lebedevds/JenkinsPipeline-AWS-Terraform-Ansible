@@ -1,0 +1,62 @@
+---
+
+- name: Build provisioning
+  hosts: tag_Name_build
+  remote_user: ubuntu
+
+  vars:
+    AWS_ACCEESS_KEY: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      34376538356665346433653530303534653631336133313138663364653937363134393435376465
+      3263623435326265373238386163633465633565643663630a386365366363636634356535383635
+      32303430633434376638326136646263383562633061383761333335333639363330366163386461
+      6139303531393861300a303762393736616466643062663733626439646162626238373434636337
+      36366437383233316336643232333462663839323530646332303164616238303466
+    AWS_SECRET_KEY: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      34393334643761626638623462303838313261343132656234326566646230386366636432626461
+      6431663630636439616431303937646437366330643533650a313262393063353434313161376162
+      31366434373933323430343832363863646232633564376661376434653035393937346561373863
+      3266626562346635640a386439626530613733356236323139313563636237653765613431376335
+      36653865323030356331363835373861353239643135306335333437633262303466653763356535
+      6333316432366662633334386466623235613733393530376139
+    AWS_REGION: us-east-2
+
+  tasks:
+  - name: Ensure necessary packages is present
+    apt:
+      update_cache: yes
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+      - default-jdk
+      - maven
+      - awscli
+
+  - name: Ensure the git repository is cloned
+    git:
+      repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
+      dest: /tmp/WAR
+      clone: yes
+
+  - name: Ensure war file is ready
+    command: mvn package -f /tmp/WAR/pom.xml
+
+  - name: Configure AWS-CLI
+    command: export AWS_ACCESS_KEY_ID={{ AWS_ACCEESS_KEY }} && export AWS_SECRET_ACCESS_KEY={{ AWS_SECRET_KEY }} && export AWS_DEFAULT_REGION=us-east-2
+
+  - name: Ensure war file in s3 backet
+    command: aws s3 cp /tmp/test-webapp/target/hello-1.0.war s3://mybacket1.test5.com/
+
+
+- name: App server provisioning
+  hosts: tag_Name_app
+  remote_user: ubuntu
+
+  tasks:
+    - name: Ensure tomcat is present
+      apt:
+        update_cache: yes
+        name: tomcat9
+        state: present

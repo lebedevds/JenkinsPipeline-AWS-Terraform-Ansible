@@ -8,5 +8,19 @@ pipeline {
         sh "echo 'yes' | terraform apply"
         }
     }
+    stage ('Provisioning Build and App Servers') {
+      steps {
+        ansiblePlaybook(
+          become: true,
+          becomeUser: 'ubuntu',
+          installation: 'ansible',
+          disableHostKeyChecking: false,
+          credentialsId: 'AWS-key',
+          vaultCredentialsId: 'AWS_ACCESS_KEY',
+          playbook: './ansible-playbook.yml',
+          inventory: './aws_ec2.yml')
+      }
+    }
+
   }
 }
