@@ -12,7 +12,7 @@ pipeline {
       steps {
         ansiblePlaybook(
           become: true,
-          becomeUser: 'ubuntu',
+          becomeUser: 'root',
           installation: 'ansible',
           disableHostKeyChecking: true,
           credentialsId: 'AWS-key',
