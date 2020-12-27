@@ -17,7 +17,6 @@
       packages:
       - default-jdk
       - maven
-#      - awscli
       - python-pip
 
   - name: Ensure the git repository is cloned
@@ -78,12 +77,6 @@
         aws_access_key: "{{ AWS_ACCEESS_KEY }}"
         aws_secret_key: "{{ AWS_SECRET_KEY }}"
         region: "{{ AWS_REGION }}"
-
-
-#    - name: Ensure war file on App Server
-#      get_url:
-#        url: https://s3.us-east-2.amazonaws.com/mybacket1.test5.com/hello-1.0.war
-#        dest: /home/ubuntu/war/hello-1.0.war
 
     - name: Ensure old version is not running
       shell: |
