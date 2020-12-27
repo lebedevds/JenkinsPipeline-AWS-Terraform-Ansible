@@ -95,14 +95,3 @@
 
     - name: Ensure docker container is started
       command: docker run --name webapp -d -p 8080:8080 -v /home/ubuntu/war/:/usr/local/tomcat/webapps/ --restart=always tomcat:9.0.20-jre8-alpine
-
-    - name: Ensure Build Server is Terminated
-      ec2:
-        image: ami-0dd9f0e7df0f0a138
-        instance_type: t2.micro
-        instance_tags:
-          Name: build
-        state: absent
-        aws_access_key: "{{ AWS_ACCEESS_KEY }}"
-        aws_secret_key: "{{ AWS_SECRET_KEY }}"
-        region: "{{ AWS_REGION }}"
