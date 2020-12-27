@@ -51,11 +51,15 @@
     - ./vars.yml
 
   tasks:
-    - name: Ensure docker is present
-      apt:
-        update_cache: yes
-        name: docker.io
-        state: present
+  - name: Ensure necessary packages is present
+    apt:
+      update_cache: yes
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+      - docker.io
+      - python-pip
 
     - name: Requirements for aws_s3
       command: python -m pip install boto3 datautil
