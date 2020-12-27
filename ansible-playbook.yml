@@ -70,7 +70,7 @@
         - python3-pip
 
     - name: Requirements for aws
-      command: python3 -m pip install boto botocore boto3
+      command: python3 -m pip install botocore boto3
 
     - name: Ensure derictory for war file is ready
       file:
