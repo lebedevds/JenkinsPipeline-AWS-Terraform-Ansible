@@ -17,7 +17,7 @@
       packages:
       - default-jdk
       - maven
-      - python-pip
+      - python3-pip
 
   - name: Ensure the git repository is cloned
     git:
@@ -58,7 +58,7 @@
       vars:
         packages:
         - docker.io
-        - python-pip
+        - python3-pip
 
     - name: Requirements for aws_s3
       command: python -m pip install botocore boto3
