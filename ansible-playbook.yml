@@ -30,7 +30,7 @@
     command: mvn package -f /tmp/WAR/pom.xml
 
   - name: Requirements for s3_sync
-    command: pip install boto3 python-dateutil
+    command: python -m pip install boto3 datautil
 
   - name: Ensure war file in s3 backet
     s3_sync:
