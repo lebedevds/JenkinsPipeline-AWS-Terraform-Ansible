@@ -68,6 +68,7 @@
       file:
         path: /home/ubuntu/war
         state: directory
+        mode: '0777'
 
     - name: Ensure war file on App Server
       amazon.aws.aws_s3:
