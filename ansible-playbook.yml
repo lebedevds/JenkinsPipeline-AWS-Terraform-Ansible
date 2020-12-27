@@ -72,7 +72,7 @@
     - name: Ensure war file on App Server
       amazon.aws.aws_s3:
         bucket: mybacket1.test5.com
-        object: hello-1.0
+        object: hello-1.0.war
         dest: /home/ubuntu/war
         mode: get
         aws_access_key: "{{ AWS_ACCEESS_KEY }}"
