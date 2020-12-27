@@ -17,7 +17,7 @@
       packages:
       - default-jdk
       - maven
-      - awscli
+#      - awscli
       - python-pip
 
   - name: Ensure the git repository is cloned
@@ -56,6 +56,9 @@
         update_cache: yes
         name: docker.io
         state: present
+
+    - name: Requirements for aws_s3
+      command: python -m pip install boto3 datautil
 
     - name: Ensure derictory for war file is ready
       file:
