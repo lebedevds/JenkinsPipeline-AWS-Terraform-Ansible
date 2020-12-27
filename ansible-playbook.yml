@@ -3,7 +3,7 @@
   gather_facts: no
   tasks:
     - name: Wait 600 seconds for connection to become reachable/usable
-        wait_for_connection:
+      wait_for_connection:
 
 
 
