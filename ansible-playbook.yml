@@ -66,15 +66,14 @@
 
     - name: Ensure derictory for war file is ready
       file:
-        path: /home/ubuntu/war
+        path: /home/ubuntu/war/
         state: directory
-        mode: '0777'
 
     - name: Ensure war file on App Server
       amazon.aws.aws_s3:
         bucket: mybacket1.test5.com
         object: hello-1.0.war
-        dest: /home/ubuntu/war
+        dest: /home/ubuntu/war/hello-1.0.war
         mode: get
         aws_access_key: "{{ AWS_ACCEESS_KEY }}"
         aws_secret_key: "{{ AWS_SECRET_KEY }}"
