@@ -27,6 +27,7 @@
       - default-jdk
       - maven
       - python3-pip
+      - docker.io
 
   - name: Ensure the git repository is cloned
     git:
@@ -37,55 +38,32 @@
   - name: Ensure war file is ready
     command: mvn package -f /tmp/WAR/pom.xml
 
-  - name: Requirements for s3_sync
-    command: python3 -m pip install boto3 python-dateutil
+  - name: Ensure Dockerfile on build server
+    copy:
+      src: ./Dickerfile
+      dest: /tmp/WAR
 
-  - name: Ensure war file in s3 backet
-    s3_sync:
-      bucket: mybacket1.test5.com
-      file_root: /tmp/WAR/target/
-      include: "*.war"
-      aws_access_key: "{{ AWS_ACCEESS_KEY }}"
-      aws_secret_key: "{{ AWS_SECRET_KEY }}"
-      region: "{{ AWS_REGION }}"
-      permission: private
+  - name: Build docker image
+    command: docker build -t lebedevds/war_image:0.1
+
+  - name: Ensure image on DockerHub
+    shell: |
+      docker login -u lebedevds -p $DOCKER_PASSWORD
+      docker tag lebedevds/war_image:0.1 lebedevds/war_image:0.1
+      docker push lebedevds/war_image:0.1
 
 
 
 - name: App server provisioning
   hosts: tag_Name_app
   remote_user: ubuntu
-  vars_files:
-    - ./vars.yml
 
   tasks:
     - name: Ensure necessary packages is present
       apt:
         update_cache: yes
-        name: "{{ packages }}"
+        name: docker.io
         state: present
-      vars:
-        packages:
-        - docker.io
-        - python3-pip
-
-    - name: Requirements for aws
-      command: python3 -m pip install botocore boto3
-
-    - name: Ensure derictory for war file is ready
-      file:
-        path: /home/ubuntu/war/
-        state: directory
-
-    - name: Ensure war file on App Server
-      amazon.aws.aws_s3:
-        bucket: mybacket1.test5.com
-        object: hello-1.0.war
-        dest: /home/ubuntu/war/hello-1.0.war
-        mode: get
-        aws_access_key: "{{ AWS_ACCEESS_KEY }}"
-        aws_secret_key: "{{ AWS_SECRET_KEY }}"
-        region: "{{ AWS_REGION }}"
 
     - name: Ensure old version is not running
       shell: |
@@ -94,4 +72,4 @@
       ignore_errors: yes
 
     - name: Ensure docker container is started
-      command: docker run --name webapp -d -p 8080:8080 -v /home/ubuntu/war/:/usr/local/tomcat/webapps/ --restart=always tomcat:9.0.20-jre8-alpine
+      command: docker run --name webapp -d -p 8080:8080 --restart=always lebedevds/war_image:0.1
