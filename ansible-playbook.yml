@@ -41,10 +41,10 @@
   - name: Ensure Dockerfile on build server
     copy:
       src: ./Dockerfile
-      dest: /tmp/WAR
+      dest: /tmp/
 
   - name: Build docker image
-    command: docker build . -t lebedevds/war_image:0.1
+    command: docker build /tmp/ -t lebedevds/war_image:0.1
 
   - name: Ensure image on DockerHub
     shell: |
