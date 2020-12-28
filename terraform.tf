@@ -5,8 +5,8 @@ provider "aws" {
 resource "aws_s3_bucket" "bucket" {
   provider = aws
   bucket = "mybacket1.test5.com"
-#  acl = "public-read"
 }
+
 resource "aws_instance" "build" {
   ami = "ami-0dd9f0e7df0f0a138"
   instance_type = "t2.micro"
@@ -17,8 +17,8 @@ resource "aws_instance" "build" {
   vpc_security_group_ids = [
     aws_security_group.my-secgroup.id]
   key_name = "MyKeyPair"
-
 }
+
 resource "aws_instance" "app" {
   ami = "ami-0dd9f0e7df0f0a138"
   instance_type = "t2.micro"
