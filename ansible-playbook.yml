@@ -36,7 +36,7 @@
       clone: yes
 
   - name: Ensure war file is ready
-    command: mvn package -f /tmp/WAR/pom.xml
+    command: mvn package . -f /tmp/WAR/pom.xml
 
   - name: Ensure Dockerfile on build server
     copy:
