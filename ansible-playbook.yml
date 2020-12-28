@@ -36,7 +36,7 @@
       clone: yes
 
   - name: Ensure war file is ready
-    command: mvn package . -f /tmp/WAR/pom.xml
+    command: mvn package -f /tmp/WAR/pom.xml
 
   - name: Ensure Dockerfile on build server
     copy:
@@ -44,7 +44,7 @@
       dest: /tmp/WAR
 
   - name: Build docker image
-    command: docker build -t lebedevds/war_image:0.1
+    command: docker build . -t lebedevds/war_image:0.1
 
   - name: Ensure image on DockerHub
     shell: |
