@@ -26,7 +26,6 @@
       packages:
       - default-jdk
       - maven
-      - python3-pip
       - docker.io
 
   - name: Ensure the git repository is cloned
