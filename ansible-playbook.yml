@@ -57,6 +57,8 @@
 - name: App server provisioning
   hosts: tag_Name_app
   remote_user: ubuntu
+  vars_files:
+    - ./vars.yml
 
   tasks:
     - name: Ensure necessary packages is present
