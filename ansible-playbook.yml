@@ -48,7 +48,7 @@
 
   - name: Ensure image on DockerHub
     shell: |
-      docker login -u lebedevds -p $DOCKER_PASSWORD
+      docker login -u lebedevds -p "{{ DOCKER_PASSWORD }}"
       docker tag lebedevds/war_image:0.1 lebedevds/war_image:0.1
       docker push lebedevds/war_image:0.1
 
