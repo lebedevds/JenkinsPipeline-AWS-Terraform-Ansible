@@ -40,7 +40,7 @@
 
   - name: Ensure Dockerfile on build server
     copy:
-      src: ./Dickerfile
+      src: ./Dockerfile
       dest: /tmp/WAR
 
   - name: Build docker image
